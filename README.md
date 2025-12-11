@@ -86,4 +86,4 @@ Verify the location on:
 ---
 **Challenge**: Yassir Taxi Hotspot Hunt  
 **Status**: ✅ Solved  
-**Location**: Constantine, Algeria
+**Location**: batna, Algeria
