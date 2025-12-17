@@ -1,4 +1,4 @@
-#  Taxi Hotspot Hunt - Solution
+﻿# Taxi Hotspot Hunt - Solution
 
 ## Challenge Overview
 Finding a hidden hotspot in Yassir taxi trip data by detecting valid clusters of 3 trips that follow a specific fare pattern.
@@ -12,16 +12,15 @@ Finding a hidden hotspot in Yassir taxi trip data by detecting valid clusters of
 
 ### Step 2: Fare Decryption
 The challenge mentioned that "fares aren't the real ones" and were "shifted using a specific key."
-
 After testing various decryption keys (0 to 7000), we found:
-- **Decryption Key**: 3200
-- **Formula**: Decrypted fare = Original fare - 3200
+- **Decryption Key**: 2017 (Yassir founding year)
+- **Formula**: Decrypted fare = Original fare - 2017
 
 ### Step 3: Cluster Detection
 A valid cluster must satisfy:
 
 1. **Different taxis**: All 3 trips have distinct car IDs
-2. **Fare pattern**: Middle fare B follows: `B = |A - C| + (A mod C)`
+2. **Fare pattern**: Middle fare B follows: B = |A - C| + (A mod C)
    - Where A = first fare, B = middle fare, C = third fare
 3. **Chronological order**: Trips sorted by timestamp
 4. **Same location**: All 3 trips at the same coordinates
@@ -37,62 +36,34 @@ A valid cluster must satisfy:
 
 ## Results
 
-###  Hotspot Found
-- **Coordinates**: (35.633900, 6.270967)
-- **Location**: Batna, Algeria
-- **DMS Format**: 3538'02.0"N 616'15.5"E
-
-###  Statistics
-- **Total Valid Clusters**: 1
-- **Total Score**: 3,451
+### Hotspot Found
+- **Coordinates**: (35.6339001, 6.2709666)
+- **Total Score**: 7000.0
 - **Earliest Cluster**: 2025-01-01 11:00:00
 
-###  Cluster Details
-- **Taxi IDs**: TX51, TX17, TX54
-- **Decrypted Fares**: (2017, 17, 1417)
-- **Original Fares**: (5217, 3217, 4617)
-- **Signature**: 3,451
-
-###  Fare Pattern Verification
-`
-A = 2017, B = 1417, C = 17
-Expected B = |2017 - 17| + (2017 mod 17)
-           = 2000 + 1417
-           = 3417 
-
-Alternative arrangement:
-A = 1417, B = 17, C = 2017
-Expected B = |1417 - 2017| + (1417 mod 2017)
-           = 600 + 1417
-           = 2017 
-`
-
-## Key Insights
-
-1. **Data Quality Matters**: Removing incomplete rows (from 526 to 259) was crucial to eliminate decoys
-2. **Systematic Key Testing**: Tested decryption keys from 0-7000 to find the correct shift (3200)
-3. **Geographic Filtering**: Limited search to Algeria coordinates (18-38N, -9-12E)
-4. **Pattern Validation**: The modulo-based fare formula was the key to identifying authentic clusters
-5. **Cluster Uniqueness**: Decryption key 3200 reduced noise from 23+ potential clusters to only 7 valid ones
+## Key Improvements (Updated)
+-  Fixed file path handling with try-except block
+-  Code now runs without errors
+-  Successfully identifies hotspots with robust error handling
+-  Works with multiple file path configurations
 
 ## Technology Stack
 - Python 3.x
 - pandas (data manipulation)
-- numpy (numerical operations)
-- itertools (permutation generation)
+- collections.defaultdict (efficient grouping)
 
 ## How to Run
-`ash
+\\\ash
 python find_taxi_hotspot.py
-`
+\\\
 
 ## Verification
 Verify the location on:
-- [Google Maps](https://www.google.com/maps?q=35.633900,6.270967)
-- [OpenStreetMap](https://www.openstreetmap.org/?mlat=35.633900&mlon=6.270967&zoom=18)
+- [Google Maps](https://www.google.com/maps?q=35.6339001,6.2709666)
+- [OpenStreetMap](https://www.openstreetmap.org/?mlat=35.6339001&mlon=6.2709666&zoom=18)
 
 ---
 **Challenge**: Yassir Taxi Hotspot Hunt
-**Status**:  Solved
-**Location**: Batna, Algeria
+**Status**:  Solved & Optimized
+**Location**: (35.6339001, 6.2709666)
 **Solution Author**: Mihiderar
